@@ -157,3 +157,13 @@ class SQLHelper():
         user_id = self.__get_user_from_database(login_email)  # получаем ид по емайл, который используется для логина
         cursor.execute("UPDATE public.user SET  email_valid = false WHERE id = (%s)", (user_id,)) # снимаем верификацию
         connection.commit()
+
+    def clear_added_currencies_by_email(self, email):
+        """
+        Очищает список добавленных через add wallets валют по email юзера
+        :param email: email пользователя
+        """
+        cursor, connection = self.connect_to_database()
+        user_id = self.__get_user_from_database(email)
+        cursor.execute("UPDATE public.user_settings SET attached_currencies = '[]' WHERE user_id = (%s)", (user_id,))
+        connection.commit()
