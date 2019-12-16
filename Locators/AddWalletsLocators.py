@@ -19,11 +19,15 @@ class Coins:
     CoinCircle = (By.XPATH, "//div[contains(@class, 'icon-currency__currencyIcon--1QZfs icon-currency__circle--1_yET')]")
     AddedIcon = (By.XPATH, "//span[contains(@class, 'svg-icon__svgIcon--216sc coins__actionIcon--34Q5O coins__attached--1NJJt')]")
     AddIcon = (By.XPATH, "//span[contains(@class, 'svg-icon__svgIcon--216sc coins__actionIcon--34Q5O')]")
+    CoinsDOGEClicable = (By.XPATH, "//div[contains(@class, 'coins__coin--2baZF') and @data-currency='doge']")
 
 class Tokens:
     TokenCircle = (By.XPATH, "//div[contains(@class, 'icon-currency__currencyIcon--1QZfs icon-currency__circle--1_yET')]")
     AddedIcon = (By.XPATH, "//span[contains(@class, 'svg-icon__svgIcon--216sc coins__actionIcon--34Q5O coins__attached--1NJJt')]")
     AddIcon = (By.XPATH, "//span[contains(@class, 'svg-icon__svgIcon--216sc coins__actionIcon--34Q5O')]")
+    TokensUSDCClicable = (By.XPATH, "//div[contains(@class, 'coins__coin--2baZF') and @data-currency='usdc_etht']")
 
 class MyWallets:
     XEM = (By.XPATH, "//a[contains(@class, 'wallets-widget__block--WcO-j') and @href='/?currencies=xem&section=history']")
+    DOGE = (By.XPATH, "//a[contains(@class, 'wallets-widget__block--WcO-j') and @href='/?currencies=doge&section=history']")
+    USDC = (By.XPATH, "//a[contains(@class, 'wallets-widget__block--WcO-j') and @href='/?currencies=usdc_etht&section=history']")

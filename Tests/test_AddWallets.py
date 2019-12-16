@@ -42,6 +42,24 @@ class TestClass:
         loginPage.login_as_basic_user(UserforAddWalletFromFeatured.email, UserforCheckAddWallets.password)
         loginPage.input_pincode_login(UserforAddWalletFromFeatured.pincode)
         addWalletsPage = AddWalletsPage(driver)
-        addWalletsPage.wait_and_click(AddWalletsElements.AddWalletsButton)
-        addWalletsPage.wait_and_click(Featured.FeaturedXEMClicable)
-        addWalletsPage.wait_and_click(MyWallets.XEM)
+        addWalletsPage.add_from_featured(Featured.FeaturedXEMClicable, MyWallets.XEM)
+
+    @xray("QA-1696")
+    def test_add_wallet_from_featured(self, driver, clear_added_wallets_fixture):
+        clear_added_wallets_fixture(user=UserforAddWalletFromCoins.email)
+        loginPage = LoginPage(driver)
+        loginPage.reset_session()
+        loginPage.login_as_basic_user(UserforAddWalletFromCoins.email, UserforAddWalletFromCoins.password)
+        loginPage.input_pincode_login(UserforAddWalletFromCoins.pincode)
+        addWalletsPage = AddWalletsPage(driver)
+        addWalletsPage.add_from_coins(Coins.CoinsDOGEClicable, MyWallets.DOGE)
+
+    @xray("QA-1697")
+    def test_add_wallet_from_featured(self, driver, clear_added_wallets_fixture):
+        clear_added_wallets_fixture(user=UserforAddWalletFromTokens.email)
+        loginPage = LoginPage(driver)
+        loginPage.reset_session()
+        loginPage.login_as_basic_user(UserforAddWalletFromTokens.email, UserforAddWalletFromTokens.password)
+        loginPage.input_pincode_login(UserforAddWalletFromTokens.pincode)
+        addWalletsPage = AddWalletsPage(driver)
+        addWalletsPage.add_from_tokens(Tokens.TokensUSDCClicable, MyWallets.USDC)
