@@ -45,6 +45,16 @@ class TransactionsPage(Page):
         self.wait_to_be_clickable(Send.continueButton3)
         self.wait_and_click(Send.continueButton3)
 
+    def send_minimum_amount_step_3(self):
+        self.wait_and_input_text(Send.amount, "0")
+        amount_text = self.get_element_text(Send.limitExceededTooltip)
+        amount = re.search("\d\.\d*", amount_text).group(0)
+        self.clear_input_text(Send.amount)
+        self.wait_and_input_text(Send.amount, amount)
+        self.wait_to_be_clickable(Send.continueButton3)
+        self.wait_and_click(Send.continueButton3)
+        return amount
+
     def check_minimum_amount(self, amount):
         self.wait_and_input_text(Send.amount, amount)
         self.wait_and_assert_element_text(Send.limitExceededTooltip, "Minimum amount 0.00000001 BTC")
@@ -216,7 +226,6 @@ class TransactionsPage(Page):
         }
         self.wait_and_click(FEE_TYPE[fee_type])
         time.sleep(0.5)
-        amount_text = "%s BTC" % amount
         network_fee = self.__get_network_fee()
         arrival_amount = self.__get_arrival_amount()
         total_amount = self.__get_total_amount()
@@ -324,6 +333,31 @@ class TransactionsPage(Page):
                 retries_left -= 1
         raise NoSuchElementException("transaction is not found")
 
+    def find_simple_by_comment(self, currency, amount, comment):
+        """
+        Проверяет данные самой верхней транзакции в history
+        :param currency: валюта транзакции, BTC/ETH/DOGE
+        :param amount: string с количеством валюты
+        :param comment: комментарий к транзакции
+        """
+        transaction_title = "–%s %s" % (amount, currency)
+        comment_formatted = 'Comment "%s"' % comment
+        retries_left = 10
+        while retries_left > 0:
+            try:
+                self.wait_until_element_visible((By.XPATH, (
+                        ".//a[contains(@class, 'item__wrapper--2HY-h')][.//div[contains(text(), '%s')]]" % comment_formatted)),
+                                                10)
+                self.wait_until_element_visible((By.XPATH, (
+                        ".//a[contains(@class, 'item__wrapper--2HY-h')][.//div[contains(text(), '%s')]]" % transaction_title)),
+                                                10)
+                return
+            except:
+                self.navigate_to_send()
+                self.navigate_to_history()
+                retries_left -= 1
+        raise NoSuchElementException("transaction is not found")
+
 
     def check_first_transaction_receive(self, currency, amount, comment):
         """
@@ -373,7 +407,7 @@ class TransactionsPage(Page):
         """
 
         self.wait_and_click(Send.firstErrorTransaction)
-        self.wait_and_assert_element_text(Send.errorMessageInTransaction, "Cannot send eth to yourself pay in address")
+        self.wait_and_assert_element_text(Send.errorMessageInTransaction, "You cannot send circularly eth to your pay in address")
 
     def check_doublespending_transaction(self, comment):
         """

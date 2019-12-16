@@ -8,6 +8,7 @@ class ExistingBasicUser:
     userID = "5d97f3d6"
     ethWallet = "0xd72a126aabc4f43639ee4e2b64c971bb35eec0ae"
     btcWallet = "3QUKkcHLTLjK3dG27M2tnkybDNgEeXQQoS"
+    dogeWallet = "DFNKD4dGpTAYCZjjqnpJL2WZrtk7McebFU"
     """Емейлы пустых юзеров для безопасного распараллеливания тестов где не требутся транзакции"""
     email695 = "vasiliyautomation+695@gmail.com"
     email837 = "vasiliyautomation+837@gmail.com"
@@ -44,7 +45,11 @@ class ExistingBasicUser:
     email1523 = "vasiliyautomation+1523@gmail.com"
     email1524 = "vasiliyautomation+1524@gmail.com"
     email1525 = "vasiliyautomation+1524@gmail.com"
+    email_1526 = "vasiliyautomation+1526@gmail.com" # отправка транзакций с 2фа, доге
+    email_1528 = "vasiliyautomation+1528@gmail.com"
+    email1611 = "vasiliyautomation+1611@gmail.com"
     highEmail = "Vasiliyautomation@gmail.com"
+    email_filters = "vasiliyautomation+filters@gmail.com"
 
 
 class ExistingBasicVerifiedUser:
