@@ -21,7 +21,7 @@ def clear_added_wallets_fixture():
 @pytest.fixture(scope='function')
 def prepare_for_delete_fixture():
     def clear_added_wallets(user):
-        sql.add_currency_by_email(user,'doge')
+        sql.add_currency_by_email(user, "doge")
         return clear_added_wallets_fixture
     return clear_added_wallets
 

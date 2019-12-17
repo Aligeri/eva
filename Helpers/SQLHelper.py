@@ -176,5 +176,6 @@ class SQLHelper():
         """
         cursor, connection = self.connect_to_database()
         user_id = self.__get_user_from_database(email)
-        cursor.execute("UPDATE public.user_settings SET attached_currencies = \'[\"btc\", \"eth\", \"%s\"]\' WHERE user_id = (%s)", (currency, user_id,) )
+        json = "[\"btc\", \"eth\", \"%s\"]" % currency
+        cursor.execute("UPDATE public.user_settings SET attached_currencies = %s WHERE user_id = (%s)", (json, user_id,) )
         connection.commit()
