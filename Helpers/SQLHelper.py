@@ -167,3 +167,14 @@ class SQLHelper():
         user_id = self.__get_user_from_database(email)
         cursor.execute("UPDATE public.user_settings SET attached_currencies = '[]' WHERE user_id = (%s)", (user_id,))
         connection.commit()
+
+    def add_currency_by_email(self, email, currency):
+        """
+        Добавляет валюту в список добавленных через add wallets валют по email юзера
+        :param email: email пользователя
+        :param currency: валюта, которую добавляем
+        """
+        cursor, connection = self.connect_to_database()
+        user_id = self.__get_user_from_database(email)
+        cursor.execute("UPDATE public.user_settings SET attached_currencies = \'[\"btc\", \"eth\", \"%s\"]\' WHERE user_id = (%s)", (currency, user_id,) )
+        connection.commit()

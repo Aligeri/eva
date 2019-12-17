@@ -18,6 +18,14 @@ def clear_added_wallets_fixture():
         return clear_added_wallets_fixture
     return clear_added_wallets
 
+@pytest.fixture(scope='function')
+def prepare_for_delete_fixture():
+    def clear_added_wallets(user):
+        sql.add_currency_by_email(user,'doge')
+        return clear_added_wallets_fixture
+    return clear_added_wallets
+
+
 class TestClass:
 
     @xray("QA-1693")
@@ -63,3 +71,11 @@ class TestClass:
         loginPage.input_pincode_login(UserforAddWalletFromTokens.pincode)
         addWalletsPage = AddWalletsPage(driver)
         addWalletsPage.add_from_tokens(Tokens.TokensUSDCClicable, MyWallets.USDC)
+
+    @xray("QA-1698")
+    def test_check_delete_popup(self, driver, prepare_for_delete_fixture):
+        prepare_for_delete_fixture(user=UserforCheckDeletePopup.email)
+        loginPage = LoginPage(driver)
+        loginPage.reset_session()
+        loginPage.login_as_basic_user(UserforCheckDeletePopup.email, UserforCheckDeletePopup.password)
+        loginPage.input_pincode_login(UserforCheckDeletePopup.pincode)
