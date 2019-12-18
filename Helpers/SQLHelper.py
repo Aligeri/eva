@@ -179,3 +179,13 @@ class SQLHelper():
         json = "[\"btc\", \"eth\", \"%s\"]" % currency
         cursor.execute("UPDATE public.user_settings SET attached_currencies = %s WHERE user_id = (%s)", (json, user_id,) )
         connection.commit()
+
+    def clear_show_after_removing_wallet_popup_by_email(self, email):
+        """
+        Удаляет в базе для указанного юзера галочку "не показывать попап" после удадления валюты
+        :param email: email пользователя
+        """
+        cursor, connection = self.connect_to_database()
+        user_id = self.__get_user_from_database(email)
+        cursor.execute("UPDATE public.user_settings SET show_after_removing_wallet_popup = null WHERE user_id = (%s)", (user_id, ) )
+        connection.commit()

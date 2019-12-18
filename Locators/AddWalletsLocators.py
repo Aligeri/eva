@@ -31,3 +31,6 @@ class MyWallets:
     XEM = (By.XPATH, "//a[contains(@class, 'wallets-widget__block--WcO-j') and @href='/?currencies=xem&section=history']")
     DOGE = (By.XPATH, "//a[contains(@class, 'wallets-widget__block--WcO-j') and @href='/?currencies=doge&section=history']")
     USDC = (By.XPATH, "//a[contains(@class, 'wallets-widget__block--WcO-j') and @href='/?currencies=usdc_etht&section=history']")
+    IconTrash = (By.XPATH, "//span[contains(@class, 'svg-icon__svgIcon--216sc wallets-widget__iconTrash--3N23j')]")
+    PupupDontShowAgain = (By.XPATH, "//div[contains(@class, 'pp__popup--2rStv')]")
+    GotItButton = (By.XPATH, "//button[contains(@class, 'button__button--2ccS0 button__type-inline--3PR1T') and text()='Got it']")

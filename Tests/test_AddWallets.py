@@ -22,6 +22,7 @@ def clear_added_wallets_fixture():
 def prepare_for_delete_fixture():
     def clear_added_wallets(user):
         sql.add_currency_by_email(user, "doge")
+        sql.clear_show_after_removing_wallet_popup_by_email(user)
         return clear_added_wallets_fixture
     return clear_added_wallets
 
@@ -79,3 +80,6 @@ class TestClass:
         loginPage.reset_session()
         loginPage.login_as_basic_user(UserforCheckDeletePopup.email, UserforCheckDeletePopup.password)
         loginPage.input_pincode_login(UserforCheckDeletePopup.pincode)
+        loginPage.wait_and_click_element_within_element(MyWallets.DOGE, MyWallets.IconTrash)
+        loginPage.wait_until_element_visible(MyWallets.PupupDontShowAgain)
+        loginPage.wait_and_click_element_within_element(MyWallets.PupupDontShowAgain, MyWallets.GotItButton)
