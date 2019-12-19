@@ -7,7 +7,6 @@ from Helpers.SQLHelper import *
 from Helpers.SMTPHelper import *
 from xrayplugin.plugin import xray
 
-
 sql = SQLHelper()
 email = SMTPHelper()
 
@@ -142,7 +141,7 @@ class TestClass:
 
     @pytest.mark.usefixtures("login_as_filter_user")
     @pytest.mark.websmoke
-    @xray("QA-998")
+    @xray("QA-998", "QA-808")
     def test_all_transactions_filter(self, driver):
 
         dashboardPage = DashboardPage(driver)

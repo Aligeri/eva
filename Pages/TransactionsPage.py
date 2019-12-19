@@ -586,3 +586,7 @@ class TransactionsPage(Page):
             amounts.append(self.get_element_text_within_webelement(transaction, Send.amountBlock))
         assert comment == comments
         assert amount == amounts
+
+    def get_current_number_of_transactions(self):
+        transactions = self.get_elements_count(Send.transactionBlock)
+        return transactions
