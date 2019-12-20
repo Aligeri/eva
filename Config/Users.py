@@ -222,6 +222,12 @@ class UserforCheckPopupCheckbox:
     password = "12345678"
     pincode = "7777"
 
+class UserforDeleteFromTokens:
+    '''юзер для проверки удаления валюты через вкладку Tokens'''
+    email = "testermail35+1742@gmail.com"
+    password = "12345678"
+    pincode = "7777"
+
 class CommonData:
     FWTContract = "0xf966bc1e1ab786830fd98a3f8f978940f8e5c13e"
     unsupportedSmartContract = "0x8b40761142b9aa6dc8964e61d0585995425c3d94"

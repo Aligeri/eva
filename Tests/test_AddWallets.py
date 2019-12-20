@@ -21,7 +21,7 @@ def clear_added_wallets_fixture():
 @pytest.fixture(scope='function')
 def prepare_for_delete_fixture():
     def clear_added_wallets(user):
-        sql.add_currency_by_email(user, "doge")
+        sql.add_currencies_by_email(user, "doge", "xem", "usdc_etht")
         sql.clear_show_after_removing_wallet_popup_by_email(user)
         return clear_added_wallets_fixture
     return clear_added_wallets
@@ -31,6 +31,7 @@ def prepare_for_check_popup_checkbox():
     sql.add_currencies_by_email(UserforCheckPopupCheckbox.email, "doge", "xem")
     sql.clear_show_after_removing_wallet_popup_by_email(UserforCheckPopupCheckbox.email)
     yield
+
 
 
 class TestClass:
@@ -60,7 +61,7 @@ class TestClass:
         addWalletsPage.add_from_featured(Featured.FeaturedXEMClicable, MyWallets.XEM)
 
     @xray("QA-1696")
-    def test_add_wallet_from_featured(self, driver, clear_added_wallets_fixture):
+    def test_add_wallet_from_coins(self, driver, clear_added_wallets_fixture):
         clear_added_wallets_fixture(user=UserforAddWalletFromCoins.email)
         loginPage = LoginPage(driver)
         loginPage.reset_session()
@@ -70,7 +71,7 @@ class TestClass:
         addWalletsPage.add_from_coins(Coins.CoinsDOGEClicable, MyWallets.DOGE)
 
     @xray("QA-1697")
-    def test_add_wallet_from_featured(self, driver, clear_added_wallets_fixture):
+    def test_add_wallet_from_tokens(self, driver, clear_added_wallets_fixture):
         clear_added_wallets_fixture(user=UserforAddWalletFromTokens.email)
         loginPage = LoginPage(driver)
         loginPage.reset_session()
@@ -105,3 +106,13 @@ class TestClass:
         loginPage.wait_and_click_element_within_element(MyWallets.XEM, MyWallets.IconTrash)
         loginPage.wait_until_element_invisible(MyWallets.PupupDontShowAgain,1)
         loginPage.wait_until_element_invisible(MyWallets.XEM)
+
+    @xray("QA-1704")
+    def test_check_delete_from_tokens(self, driver, prepare_for_delete_fixture):
+        prepare_for_delete_fixture(user=UserforDeleteFromTokens.email)
+        loginPage = LoginPage(driver)
+        loginPage.reset_session()
+        loginPage.login_as_basic_user(UserforDeleteFromTokens.email, UserforDeleteFromTokens.password)
+        loginPage.input_pincode_login(UserforDeleteFromTokens.pincode)
+        addWalletsPage = AddWalletsPage(driver)
+        addWalletsPage.delete_from_tokens(Tokens.TokensUSDCClicable, MyWallets.USDC)
