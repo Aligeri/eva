@@ -162,7 +162,6 @@ class TestClass:
     @pytest.mark.websmoke
     def test_add_second_multisig(self, driver):
         loginPage = LoginPage(driver)
-        loginPage.reset_session()
         loginPage.login_as_basic_user(UserforAddSecondMultisig.email, UserforAddSecondMultisig.password)
         loginPage.input_pincode_login(UserforAddSecondMultisig.pincode)
         securityPage = SecurityPage(driver)
@@ -185,7 +184,6 @@ class TestClass:
     @pytest.mark.websmoke
     def test_multisig_transaction_with_2_emails(self, driver):
         loginPage = LoginPage(driver)
-        loginPage.reset_session()
         loginPage.login_as_basic_user(UserforMultisigTransaction.email, UserforMultisigTransaction.password)
         loginPage.input_pincode_login(UserforMultisigTransaction.pincode)
         comment = str(time.time())
@@ -205,7 +203,6 @@ class TestClass:
     @pytest.mark.websmoke
     def test_disable_multisig_for_2_emails(self, driver):
         loginPage = LoginPage(driver)
-        loginPage.reset_session()
         loginPage.login_as_basic_user(UserforDisableMultisig.email, UserforMultisigTransaction.password)
         loginPage.input_pincode_login(UserforDisableMultisig.pincode)
         securityPage = SecurityPage(driver)
@@ -224,7 +221,6 @@ class TestClass:
     @pytest.mark.websmoke
     def test_delete_one_multisig_address(self, driver):
         loginPage = LoginPage(driver)
-        loginPage.reset_session()
         loginPage.login_as_basic_user(UserforDeleteOneMultisigAddress.email, UserforMultisigTransaction.password)
         loginPage.input_pincode_login(UserforDeleteOneMultisigAddress.pincode)
         securityPage = SecurityPage(driver)
