@@ -26,6 +26,12 @@ def prepare_for_delete_fixture():
         return clear_added_wallets_fixture
     return clear_added_wallets
 
+@pytest.fixture(scope='function')
+def prepare_for_check_popup_checkbox():
+    sql.add_currencies_by_email(UserforCheckPopupCheckbox.email, "doge", "xem")
+    sql.clear_show_after_removing_wallet_popup_by_email(UserforCheckPopupCheckbox.email)
+    yield
+
 
 class TestClass:
 
@@ -73,7 +79,7 @@ class TestClass:
         addWalletsPage = AddWalletsPage(driver)
         addWalletsPage.add_from_tokens(Tokens.TokensUSDCClicable, MyWallets.USDC)
 
-    @xray("QA-1698")
+    @xray("QA-1698", "QA-1700")
     def test_check_delete_popup(self, driver, prepare_for_delete_fixture):
         prepare_for_delete_fixture(user=UserforCheckDeletePopup.email)
         loginPage = LoginPage(driver)
@@ -83,3 +89,19 @@ class TestClass:
         loginPage.wait_and_click_element_within_element(MyWallets.DOGE, MyWallets.IconTrash)
         loginPage.wait_until_element_visible(MyWallets.PupupDontShowAgain)
         loginPage.wait_and_click_element_within_element(MyWallets.PupupDontShowAgain, MyWallets.GotItButton)
+        loginPage.wait_until_element_invisible(MyWallets.DOGE)
+
+    @xray("QA-1699")
+    @pytest.mark.usefixtures("prepare_for_check_popup_checkbox")
+    def test_check_popup_checkbox(self, driver, prepare_for_delete_fixture):
+        loginPage = LoginPage(driver)
+        loginPage.reset_session()
+        loginPage.login_as_basic_user(UserforCheckPopupCheckbox.email, UserforCheckPopupCheckbox.password)
+        loginPage.input_pincode_login(UserforCheckPopupCheckbox.pincode)
+        loginPage.wait_and_click_element_within_element(MyWallets.DOGE, MyWallets.IconTrash)
+        loginPage.wait_until_element_visible(MyWallets.PupupDontShowAgain)
+        loginPage.wait_and_click_element_within_element(MyWallets.PupupDontShowAgain, MyWallets.CheckBox)
+        loginPage.wait_and_click_element_within_element(MyWallets.PupupDontShowAgain, MyWallets.GotItButton)
+        loginPage.wait_and_click_element_within_element(MyWallets.XEM, MyWallets.IconTrash)
+        loginPage.wait_until_element_invisible(MyWallets.PupupDontShowAgain,1)
+        loginPage.wait_until_element_invisible(MyWallets.XEM)

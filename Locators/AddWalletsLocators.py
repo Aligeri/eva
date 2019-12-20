@@ -34,3 +34,4 @@ class MyWallets:
     IconTrash = (By.XPATH, "//span[contains(@class, 'svg-icon__svgIcon--216sc wallets-widget__iconTrash--3N23j')]")
     PupupDontShowAgain = (By.XPATH, "//div[contains(@class, 'pp__popup--2rStv')]")
     GotItButton = (By.XPATH, "//button[contains(@class, 'button__button--2ccS0 button__type-inline--3PR1T') and text()='Got it']")
+    CheckBox = (By.XPATH, "//label[contains(@class, 'checkbox__checkbox--31ne1 wallet-removing__checkbox--3sblH')]")
