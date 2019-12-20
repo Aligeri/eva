@@ -3,6 +3,8 @@ from Locators.DashboardLocators import *
 from Locators.WalletLocators import *
 import re
 import time
+import base64
+import zxing
 
 LANGUAGE = {
     "en": LanguageSelectors.en,
@@ -246,3 +248,13 @@ class DashboardPage(Page):
             text = self.get_text_from_webelement(element)
             texts.append(text)
         assert transactions == texts
+
+    def decode_QR_code(self):
+        self.wait_until_element_visible(DepositAddress.qr)
+        qr = self.driver.execute_script("return document.querySelector('canvas').toDataURL('image/png').substring(21);")
+        qr64 = base64.b64decode(qr)
+        with open("data/qr_code.png", "wb") as fh:
+            fh.write(qr64)
+        reader = zxing.BarCodeReader()
+        qr_parsed_value = reader.decode(filename="data/qr_code.png").parsed
+        return qr_parsed_value
