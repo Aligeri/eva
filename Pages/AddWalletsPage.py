@@ -88,3 +88,21 @@ class AddWalletsPage(Page):
         """
         self.wait_and_click(AddWalletsElements.AddWalletsButton)
         self.delete_coin(delete_locator, my_wallets_locator)
+
+    def test_search_input(self):
+        """
+        проверка добавления нескольких валют чарез поиск
+        """
+        self.wait_and_click(AddWalletsElements.AddWalletsButton)
+        self.wait_until_element_visible(AddWalletsElements.SearchInput)
+        self.wait_and_input_text(AddWalletsElements.SearchInput, "do")
+        self.wait_and_click(Coins.CoinsDOGEClicable)
+        self.clear_field(AddWalletsElements.SearchInput)
+        self.wait_and_input_text(AddWalletsElements.SearchInput, "xe")
+        self.wait_and_click(Coins.CoinsXEMClicable)
+        self.clear_field(AddWalletsElements.SearchInput)
+        self.wait_and_input_text(AddWalletsElements.SearchInput, "us")
+        self.wait_and_click(Tokens.TokensUSDCClicable)
+        self.wait_until_element_visible(MyWallets.DOGE)
+        self.wait_until_element_visible(MyWallets.XEM)
+        self.wait_until_element_visible(MyWallets.USDC)

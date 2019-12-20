@@ -89,7 +89,7 @@ class TestClass:
 
     @xray("QA-1699")
     @pytest.mark.usefixtures("prepare_for_check_popup_checkbox")
-    def test_check_popup_checkbox(self, driver, prepare_for_delete_fixture):
+    def test_check_popup_checkbox(self, driver):
         loginPage = LoginPage(driver)
         loginPage.login_as_basic_user(UserforCheckPopupCheckbox.email, UserforCheckPopupCheckbox.password)
         loginPage.input_pincode_login(UserforCheckPopupCheckbox.pincode)
@@ -127,3 +127,12 @@ class TestClass:
         loginPage.input_pincode_login(UserforDeleteFromFeatured.pincode)
         addWalletsPage = AddWalletsPage(driver)
         addWalletsPage.delete_from_featured(Featured.FeaturedXEMClicable, MyWallets.XEM)
+
+    @xray("QA-1706")
+    def test_search(self, driver, clear_added_wallets_fixture):
+        clear_added_wallets_fixture(user=UserforTestSearchAddWallets.email)
+        loginPage = LoginPage(driver)
+        loginPage.login_as_basic_user(UserforTestSearchAddWallets.email, UserforTestSearchAddWallets.password)
+        loginPage.input_pincode_login(UserforTestSearchAddWallets.pincode)
+        addWalletsPage = AddWalletsPage(driver)
+        addWalletsPage.test_search_input()

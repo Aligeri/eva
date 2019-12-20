@@ -20,6 +20,7 @@ class Coins:
     AddedIcon = (By.XPATH, "//span[contains(@class, 'svg-icon__svgIcon--216sc coins__actionIcon--34Q5O coins__attached--1NJJt')]")
     AddIcon = (By.XPATH, "//span[contains(@class, 'svg-icon__svgIcon--216sc coins__actionIcon--34Q5O')]")
     CoinsDOGEClicable = (By.XPATH, "//div[contains(@class, 'coins__coin--2baZF') and @data-currency='doge']")
+    CoinsXEMClicable = (By.XPATH, "//div[contains(@class, 'coins__coin--2baZF') and @data-currency='xem']")
 
 class Tokens:
     TokenCircle = (By.XPATH, "//div[contains(@class, 'icon-currency__currencyIcon--1QZfs icon-currency__circle--1_yET')]")
