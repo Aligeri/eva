@@ -118,3 +118,12 @@ class TestClass:
         loginPage.input_pincode_login(UserforDeleteFromCoins.pincode)
         addWalletsPage = AddWalletsPage(driver)
         addWalletsPage.delete_from_coins(Coins.CoinsDOGEClicable, MyWallets.DOGE)
+
+    @xray("QA-1744")
+    def test_check_delete_from_featured(self, driver, prepare_for_delete_fixture):
+        prepare_for_delete_fixture(user=UserforDeleteFromFeatured.email)
+        loginPage = LoginPage(driver)
+        loginPage.login_as_basic_user(UserforDeleteFromFeatured.email, UserforDeleteFromFeatured.password)
+        loginPage.input_pincode_login(UserforDeleteFromFeatured.pincode)
+        addWalletsPage = AddWalletsPage(driver)
+        addWalletsPage.delete_from_featured(Featured.FeaturedXEMClicable, MyWallets.XEM)
