@@ -37,3 +37,5 @@ class DepositAddress:
     link = (By.XPATH, "//a[@target='_blank']/b")
     minimumBlock = (By.XPATH, "//div[@class='receive__minimalBlock--y7xpq']")
     minimumAmount = (By.XPATH, "//div[@class='receive__minimalBlock--y7xpq']/b")
+
+    qr = (By.XPATH, "//canvas")

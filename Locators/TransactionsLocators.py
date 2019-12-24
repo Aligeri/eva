@@ -63,6 +63,8 @@ class Send:
     commentBlock = (By.XPATH, "//div[contains(@class, 'item__address--V6FmR')]")
     amountBlock = (By.XPATH, "//div[contains(@class, 'item__amount--3WcgV')]")
 
+    load_more = (By.XPATH, "//button[contains(@class, 'transactions-list__loadMore--2ksUt')]")
+
 
 class TopUpPhone:
     mobileNumber = (By.XPATH, "//input[contains(@class, 'mobile-pay-section__input--bGf8n')]")

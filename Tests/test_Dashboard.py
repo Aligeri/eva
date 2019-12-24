@@ -249,3 +249,16 @@ class TestClass:
         settingsPage.navigate_to_dashboard()
         dashboardPage.navigate_to_receive()
         dashboardPage.check_receive_link('Dogecoin',new_user_id)
+
+
+    @xray("QA-983")
+    @pytest.mark.websmoke
+    def test_qr_in_receive(self, driver):
+        login_page = LoginPage(driver)
+        dashboard_page = DashboardPage(driver)
+        login_page.login_as_basic_user(ExistingBasicUser.email, ExistingBasicUser.password)
+        login_page.input_pincode_login(ExistingBasicUser.pincode)
+        dashboard_page.navigate_to_receive()
+        dashboard_page.select_wallet("Bitcoin")
+        qr_value = dashboard_page.decode_QR_code()
+        assert qr_value == "btc:3QUKkcHLTLjK3dG27M2tnkybDNgEeXQQoS"

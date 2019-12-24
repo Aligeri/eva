@@ -587,6 +587,10 @@ class TransactionsPage(Page):
         assert comment == comments
         assert amount == amounts
 
+    def get_current_number_of_transactions(self):
+        transactions = self.get_elements_count(Send.transactionBlock)
+        return transactions
+
     def check_unconfirmed_transaction_by_comment(self, comment):
         """
         проверяет, что транзакция подвисла в фиолетовом статусе ожидания мультисиг

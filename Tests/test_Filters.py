@@ -7,7 +7,6 @@ from Helpers.SQLHelper import *
 from Helpers.SMTPHelper import *
 from xrayplugin.plugin import xray
 
-
 sql = SQLHelper()
 email = SMTPHelper()
 
@@ -127,3 +126,25 @@ class TestClass:
         dashboardPage.apply_filter("Failed")
         dashboardPage.apply_filter("Bitcoin")
         dashboardPage.compare_transactions(date_transactions)
+
+    @pytest.mark.usefixtures("login_as_filter_user")
+    @pytest.mark.websmoke
+    @xray("QA-995")
+    def test_two_type_currency_filter(self, driver):
+
+        dashboardPage = DashboardPage(driver)
+        two_type_transactions = ['+0.02963199 ETH\nFrom 0x59...06e8', '–0.00174 ETH\nComment "failing transaction"', '+1 ETH\nFrom anonymous', '–0.00095889 BTC\nComment "exchange btc to eth" (BTC to ETH)', '+1 BTC\nFrom anonymous', '+0.001 ETH\nComment "eth transfer in"', '+0.000001 BTC\nComment "btc transfer in"']
+
+        dashboardPage.apply_filter("Ethereum")
+        dashboardPage.apply_filter("Bitcoin")
+        dashboardPage.compare_transactions(two_type_transactions)
+
+    @pytest.mark.usefixtures("login_as_filter_user")
+    @pytest.mark.websmoke
+    @xray("QA-998", "QA-808")
+    def test_all_transactions_filter(self, driver):
+
+        dashboardPage = DashboardPage(driver)
+        all_transactions = ['+0.02963199 ETH\nFrom 0x59...06e8', '–0.00174 ETH\nComment "failing transaction"', '+1 ETH\nFrom anonymous', '+2 DOGE\nFrom anonymous', '–0.00095889 BTC\nComment "exchange btc to eth" (BTC to ETH)', '+1 BTC\nFrom anonymous', '–3 DOGE\nComment "simple doge to doge"', '+0.0001 XEM\nComment "xem transfer in"', '+0.001 ETH\nComment "eth transfer in"', '+10 DOGE\nComment "doge transfer in"', '+0.000001 BTC\nComment "btc transfer in"']
+
+        dashboardPage.compare_transactions(all_transactions)

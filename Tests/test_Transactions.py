@@ -344,3 +344,15 @@ class TestClass:
         transactionsPage.send_transaction_step_4(comment)
         transactionsPage.find_transaction_by_comment("ETH", amount, comment)
 
+    @pytest.mark.usefixtures("login_as_basic_user")
+    @xray("QA-1080")
+    @pytest.mark.websmoke
+    def test_load_more_transactions(self, driver):
+        transactionsPage = TransactionsPage(driver)
+        before = transactionsPage.get_current_number_of_transactions()
+        assert before == 20
+        transactionsPage.wait_and_click(Send.load_more)
+        after = transactionsPage.get_current_number_of_transactions()
+        assert after == 40
+
+
