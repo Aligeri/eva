@@ -157,3 +157,50 @@ class SQLHelper():
         user_id = self.__get_user_from_database(login_email)  # получаем ид по емайл, который используется для логина
         cursor.execute("UPDATE public.user SET  email_valid = false WHERE id = (%s)", (user_id,)) # снимаем верификацию
         connection.commit()
+
+    def clear_added_currencies_by_email(self, email):
+        """
+        Очищает список добавленных через add wallets валют по email юзера
+        :param email: email пользователя
+        """
+        cursor, connection = self.connect_to_database()
+        user_id = self.__get_user_from_database(email)
+        cursor.execute("UPDATE public.user_settings SET attached_currencies = '[]' WHERE user_id = (%s)", (user_id,))
+        connection.commit()
+
+    def add_currency_by_email(self, email, currency):
+        """
+        Добавляет валюту в список добавленных через add wallets валют по email юзера
+        :param email: email пользователя
+        :param currency: валюта, которую добавляем
+        """
+        cursor, connection = self.connect_to_database()
+        user_id = self.__get_user_from_database(email)
+        json = "[\"btc\", \"eth\", \"%s\"]" % currency
+        cursor.execute("UPDATE public.user_settings SET attached_currencies = %s WHERE user_id = (%s)", (json, user_id,) )
+        connection.commit()
+
+    def add_currencies_by_email(self, email, *currencies):
+        """
+        Добавляет несколько валют в список добавленных через add wallets валют по email юзера
+        :param email: email пользователя
+        :param currencies: валюты, которые добавляем
+        """
+        cursor, connection = self.connect_to_database()
+        user_id = self.__get_user_from_database(email)
+        json = "[\"btc\", \"eth\""
+        for currency in currencies:
+            json += ", \"%s\"" % currency
+        json += "]"
+        cursor.execute("UPDATE public.user_settings SET attached_currencies = %s WHERE user_id = (%s)", (json, user_id,) )
+        connection.commit()
+
+    def clear_show_after_removing_wallet_popup_by_email(self, email):
+        """
+        Удаляет в базе для указанного юзера галочку "не показывать попап" после удадления валюты
+        :param email: email пользователя
+        """
+        cursor, connection = self.connect_to_database()
+        user_id = self.__get_user_from_database(email)
+        cursor.execute("UPDATE public.user_settings SET show_after_removing_wallet_popup = null WHERE user_id = (%s)", (user_id, ) )
+        connection.commit()
